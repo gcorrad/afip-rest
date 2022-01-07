@@ -1,0 +1,8 @@
+lib
+datos
+node_modules
+ejemplos
+Dockerfile
+.dockerignore
+.gitignore
+.vscode

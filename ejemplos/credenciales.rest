@@ -1,0 +1,14 @@
+@host = localhost:3033
+@cuit = CUIT_CONTRIBUYENTE
+
+###
+# Para cargar los certificados de la cuenta
+# ambos archivos deben estar codificados en base64
+
+POST http://{{host}}/afip_rest/altacli/{{cuit}} HTTP/1.1
+content-type: application/json
+
+{
+    "KEY": "CLAVE_PRIVADA_B64",
+    "CRT": "CERTIFICADO_B64"
+}

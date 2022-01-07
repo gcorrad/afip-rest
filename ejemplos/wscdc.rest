@@ -1,0 +1,67 @@
+@host = localhost:3033
+@cuit = CUIT_CONTRIBUYENTE
+
+###
+# Obtiene la descripcion del WS
+POST http://{{host}}/afip_rest/descr/wscdc HTTP/1.1
+content-type: application/json
+
+###
+# Obtiene la descripcion de un metodo en particular 
+POST http://{{host}}/afip_rest/descr/wscdc/ComprobanteConstatar HTTP/1.1
+content-type: application/json
+
+###
+# Metodo de autenticacion para obtener el ticket de acceso 
+# es llamado automaticamente cuando este no existe o es muy viejo
+POST http://{{host}}/afip_rest/wsaa/{{cuit}}/wscdc HTTP/1.1
+content-type: application/json
+
+###
+# Llama al metodo ComprobantesTipoConsultar
+POST http://{{host}}/afip_rest/call/{{cuit}}/wscdc/ComprobantesTipoConsultar HTTP/1.1
+content-type: application/json
+
+{ "Auth": {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  }
+}
+
+###
+# Llama al metodo ComprobantesModalidadConsultar
+POST http://{{host}}/afip_rest/call/{{cuit}}/wscdc/ComprobantesModalidadConsultar HTTP/1.1
+content-type: application/json
+
+{ "Auth": {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  }
+}
+
+###
+# Llama al metodo ComprobanteConstatar
+POST http://{{host}}/afip_rest/call/{{cuit}}/wscdc/ComprobanteConstatar HTTP/1.1
+content-type: application/json
+
+{
+    "Auth": {
+      "Token": "",
+      "Sign": "",
+      "Cuit": ""
+    },
+    "CmpReq": {
+      "CbteModo": "CAE",
+      "CuitEmisor": "",
+      "PtoVta": "",
+      "CbteTipo": "",
+      "CbteNro": "",
+      "CbteFch": "",
+      "ImpTotal": "",
+      "CodAutorizacion": "",
+      "DocTipoReceptor": "",
+      "DocNroReceptor": ""
+    }
+}

@@ -1,0 +1,24 @@
+@host = localhost:3033
+@cuit = CUIT_CONTRIBUYENTE
+
+
+###
+# Obtiene la descripcion del WS
+POST http://{{host}}/afip_rest/descr/wsfecred HTTP/1.1
+content-type: application/json
+
+###
+# Obtiene la descripcion de un metodo en particular 
+POST http://{{host}}/afip_rest/descr/wsfecred/consultarComprobantes HTTP/1.1
+content-type: application/json
+
+###
+# Metodo de autenticacion para obtener el ticket de acceso 
+# es llamado automaticamente cuando este no existe o es muy viejo
+POST http://{{host}}/afip_rest/wsaa/{{cuit}}/wsfecred HTTP/1.1
+content-type: application/json
+
+###
+# Obtiene la descripcion de un metodo en particular 
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfecred/dummy HTTP/1.1
+content-type: application/json

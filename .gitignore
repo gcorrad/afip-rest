@@ -1,0 +1,6 @@
+lib
+datos
+node_modules
+afip_rest.log
+afip_rest.ini
+.vscode

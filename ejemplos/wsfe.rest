@@ -1,0 +1,138 @@
+@host = localhost:3033
+@cuit = CUIT_CONTRIBUYENTE
+
+###
+# Obtiene la descripcion del WS
+POST http://{{host}}/afip_rest/descr/wsfe HTTP/1.1
+content-type: application/json
+
+###
+# Obtiene la descripcion de un metodo en particular 
+POST http://{{host}}/afip_rest/descr/wsfe/FEParamGetTiposTributos HTTP/1.1
+content-type: application/json
+
+###
+# Metodo de autenticacion para obtener el ticket de acceso 
+# es llamado automaticamente cuando este no existe o es muy viejo
+POST http://{{host}}/afip_rest/wsaa/{{cuit}}/wsfe HTTP/1.1
+content-type: application/json
+
+###
+# Llama al metodo Dummy
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfe/FEDummy HTTP/1.1
+
+###
+# ejemplo de ws con datos POST los campos 'Auth' con rellenados automaticamente 
+# con el cuit del contribuyente y las credenciales obtenidas para ese WS
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfe/FEParamGetTiposTributos HTTP/1.1
+content-type: application/json
+
+{ "Auth":
+  {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  }
+}
+
+###
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfe/FEParamGetTiposMonedas HTTP/1.1
+content-type: application/json
+
+{ "Auth":
+  {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  }
+}
+
+###
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfe/FEParamGetTiposIva HTTP/1.1
+content-type: application/json
+
+{ "Auth":
+  {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  }
+}
+
+###
+# Ejemplo de consulta del ultimo numero para ese punto de ventas
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfe/FECompUltimoAutorizado HTTP/1.1
+content-type: application/json
+
+{ "Auth":
+  {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  },
+  "PtoVta": "1",
+  "CbteTipo": "1"
+}
+
+###
+# Ejemplo simple de factura 
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfe/FECAESolicitar HTTP/1.1
+content-type: application/json
+
+{ "Auth":
+  {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  },
+  "FeCAEReq": {
+    "FeCabReq": {
+      "CantReg": "1",
+      "PtoVta": "1",
+      "CbteTipo": "1"
+    },
+    "FeDetReq": {
+      "FECAEDetRequest": {
+        "Concepto": "1",
+        "DocTipo": "80",
+        "DocNro": "11111111111",
+        "CbteDesde": "7",
+        "CbteHasta": "7",
+        "CbteFch": "20211122",
+        "ImpTotal": "121",
+        "ImpTotConc": "0",
+        "ImpNeto": "100",
+        "ImpOpEx": "0",
+        "ImpTrib": "0",
+        "ImpIVA": "21",
+        "MonId": "PES",
+        "MonCotiz": "1",
+        "Iva": {
+          "AlicIva": {
+            "Id": "5",
+            "BaseImp": "100",
+            "Importe": "21"
+          }
+        }
+      }
+    }
+  }
+}
+
+###
+# Ejemplo de consulta de comprobante
+POST http://{{host}}/afip_rest/call/{{cuit}}/wsfe/FECompConsultar HTTP/1.1
+content-type: application/json
+
+{
+  "Auth": {
+    "Token": "",
+    "Sign": "",
+    "Cuit": ""
+  },
+  "FeCompConsReq": {
+    "CbteTipo": "1",
+    "CbteNro": "1",
+    "PtoVta": "1"
+  }
+}
